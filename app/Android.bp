@@ -71,7 +71,15 @@ android_app {
     ],
 
     optimize: {
+        enabled: true,
+        // TODO: Warning: Missing class coil3.core.R$id (referenced from: coil3.request.ViewTargetRequestManager coil3.request.ViewTargetRequestManagerKt.getRequestManager(android.view.View))
+        ignore_warnings: true,
+        optimize: true,
+        optimized_shrink_resources: true,
+        proguard_compatibility: false,
         proguard_flags_files: ["proguard-rules.pro"],
+        shrink: true,
+        shrink_resources: true,
     },
 }
 
