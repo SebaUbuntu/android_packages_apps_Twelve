@@ -62,8 +62,7 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
     private val artistNameTextView by getViewProperty<TextView>(R.id.artistNameTextView)
     private val infoNestedScrollView by getViewProperty<NestedScrollView?>(R.id.infoNestedScrollView)
     private val linearProgressIndicator by getViewProperty<LinearProgressIndicator>(R.id.linearProgressIndicator)
-    private val nestedScrollView by getViewProperty<NestedScrollView>(R.id.nestedScrollView)
-    private val noElementsNestedScrollView by getViewProperty<NestedScrollView>(R.id.noElementsNestedScrollView)
+    private val noElementsLinearLayout by getViewProperty<LinearLayout>(R.id.noElementsLinearLayout)
     private val thumbnailImageView by getViewProperty<ImageView>(R.id.thumbnailImageView)
     private val toolbar by getViewProperty<MaterialToolbar>(R.id.toolbar)
 
@@ -155,7 +154,7 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
             }
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(nestedScrollView) { v, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(albumsLinearLayout) { v, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
             v.updatePadding(
@@ -166,7 +165,7 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
             windowInsets
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(noElementsNestedScrollView) { v, windowInsets ->
+        ViewCompat.setOnApplyWindowInsetsListener(noElementsLinearLayout) { v, windowInsets ->
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
 
             v.updatePadding(
@@ -241,8 +240,8 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
                         isAppearsInAlbumEmpty,
                         isAppearsInPlaylistEmpty,
                     ).all { isEmpty -> isEmpty }
-                    nestedScrollView.isVisible = !isEmpty
-                    noElementsNestedScrollView.isVisible = isEmpty
+                    albumsLinearLayout.isVisible = !isEmpty
+                    noElementsLinearLayout.isVisible = isEmpty
                 }
 
                 is RequestStatus.Error -> {
@@ -254,8 +253,8 @@ class ArtistFragment : Fragment(R.layout.fragment_artist) {
                     appearsInAlbumAdapter.submitList(listOf())
                     appearsInPlaylistAdapter.submitList(listOf())
 
-                    nestedScrollView.isVisible = false
-                    noElementsNestedScrollView.isVisible = true
+                    albumsLinearLayout.isVisible = false
+                    noElementsLinearLayout.isVisible = true
 
                     if (it.type == RequestStatus.Error.Type.NOT_FOUND) {
                         // Get out of here
