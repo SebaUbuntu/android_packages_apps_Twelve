@@ -23,6 +23,8 @@ fun buildMediaItem(
     artworkData: ByteArray? = null,
     artworkType: @MediaMetadata.PictureType Int? = null,
     artworkUri: Uri? = null,
+    discNumber: Int? = null,
+    trackNumber: Int? = null,
 ): MediaItem {
     val metadata =
         MediaMetadata.Builder()
@@ -35,6 +37,8 @@ fun buildMediaItem(
             .setArtworkData(artworkData, artworkType)
             .setArtworkUri(artworkUri)
             .setMediaType(mediaType)
+            .setDiscNumber(discNumber)
+            .setTrackNumber(trackNumber)
             .build()
 
     return MediaItem.Builder()

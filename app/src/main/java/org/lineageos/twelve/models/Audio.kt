@@ -24,7 +24,8 @@ import org.lineageos.twelve.ext.buildMediaItem
  * @param artistName The name of the artist of the audio
  * @param albumUri The URI of the album of the audio
  * @param albumTitle The title of the album of the audio
- * @param albumTrack The track number of the audio in the album
+ * @param discNumber The number of the disc where the album is present, starts from 1
+ * @param trackNumber The track number of the audio within the disc, starts from 1
  * @param genreUri The URI of the genre of the audio
  * @param genreName The name of the genre of the audio
  * @param year The year of release of the audio
@@ -40,7 +41,8 @@ data class Audio(
     val artistName: String,
     val albumUri: Uri,
     val albumTitle: String,
-    val albumTrack: Int,
+    val discNumber: Int?,
+    val trackNumber: Int?,
     val genreUri: Uri?,
     val genreName: String?,
     val year: Int?,
@@ -79,7 +81,8 @@ data class Audio(
         Audio::artistName,
         Audio::albumUri,
         Audio::albumTitle,
-        Audio::albumTrack,
+        Audio::discNumber,
+        Audio::trackNumber,
         Audio::genreUri,
         Audio::genreName,
         Audio::year,
@@ -96,6 +99,8 @@ data class Audio(
         genre = genreName,
         sourceUri = playbackUri,
         mimeType = mimeType,
+        discNumber = discNumber,
+        trackNumber = trackNumber,
     )
 
     companion object {

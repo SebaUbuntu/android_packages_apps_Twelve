@@ -158,6 +158,13 @@ class LocalDataSource(context: Context, private val database: TwelveDatabase) : 
             else -> Audio.Type.MUSIC
         }
 
+        val (discNumber, discTrack) = track.takeUnless { it == 0 }?.let {
+            when (track > 1000) {
+                true -> track / 1000 to track % 1000
+                false -> 1 to track
+            }
+        } ?: (null to null)
+
         Audio(
             uri,
             uri,
@@ -169,7 +176,8 @@ class LocalDataSource(context: Context, private val database: TwelveDatabase) : 
             artist,
             albumUri,
             album,
-            track,
+            discNumber,
+            discTrack,
             genreUri,
             genre,
             year.takeIf { it != 0 },
