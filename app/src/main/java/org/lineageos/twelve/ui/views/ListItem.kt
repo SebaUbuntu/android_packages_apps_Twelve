@@ -28,6 +28,7 @@ class ListItem @JvmOverloads constructor(
 ) : FrameLayout(context, attrs) {
     private val headlineTextView by lazy { findViewById<TextView>(R.id.headlineTextView) }
     private val leadingIconImageView by lazy { findViewById<ImageView>(R.id.leadingIconImageView) }
+    private val leadingTextView by lazy { findViewById<TextView>(R.id.leadingTextView) }
     private val supportingTextView by lazy { findViewById<TextView>(R.id.supportingTextView) }
     private val trailingIconImageView by lazy { findViewById<ImageView>(R.id.trailingIconImageView) }
     private val trailingSupportingTextView by lazy { findViewById<TextView>(R.id.trailingSupportingTextView) }
@@ -36,6 +37,12 @@ class ListItem @JvmOverloads constructor(
         get() = leadingIconImageView.drawable
         set(value) {
             leadingIconImageView.setImageAndUpdateVisibility(value)
+        }
+
+    var leadingText: CharSequence?
+        get() = leadingTextView.text
+        set(value) {
+            leadingTextView.setTextAndUpdateVisibility(value)
         }
 
     var headlineText: CharSequence?
@@ -68,6 +75,7 @@ class ListItem @JvmOverloads constructor(
         context.obtainStyledAttributes(attrs, R.styleable.ListItem, 0, 0).apply {
             try {
                 leadingIconImage = getDrawable(R.styleable.ListItem_leadingIconImage)
+                leadingText = getString(R.styleable.ListItem_leadingText)
                 headlineText = getString(R.styleable.ListItem_headlineText)
                 supportingText = getString(R.styleable.ListItem_supportingText)
                 trailingIconImage = getDrawable(R.styleable.ListItem_trailingIconImage)
@@ -88,6 +96,10 @@ class ListItem @JvmOverloads constructor(
         leadingIconImageView.setImageAndUpdateVisibility(resId)
 
     fun setLeadingIconImage(uri: Uri) = leadingIconImageView.setImageAndUpdateVisibility(uri)
+
+    fun setLeadingText(@StringRes resId: Int) = leadingTextView.setTextAndUpdateVisibility(resId)
+    fun setLeadingText(@StringRes resId: Int, vararg formatArgs: Any) =
+        leadingTextView.setTextAndUpdateVisibility(resId, *formatArgs)
 
     fun setSupportingText(@StringRes resId: Int) =
         supportingTextView.setTextAndUpdateVisibility(resId)
