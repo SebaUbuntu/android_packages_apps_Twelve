@@ -297,6 +297,9 @@ class LocalDataSource(context: Context, private val database: TwelveDatabase) : 
                 ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS to arrayOf(
                     ContentUris.parseId(albumUri).toString(),
                 ),
+                ContentResolver.QUERY_ARG_SORT_COLUMNS to arrayOf(
+                    MediaStore.Audio.AudioColumns.TRACK,
+                )
             )
         ).mapEachRow(audiosProjection, mapAudio)
     ) { albums, audios ->
