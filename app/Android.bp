@@ -60,14 +60,15 @@ android_app {
         "androidx.room_room-ktx",
         "androidx.viewpager2_viewpager2",
         "Twelve_io.coil-kt.coil3_coil",
+        "Twelve_io.coil-kt.coil3_coil-core-android",
         "Twelve_io.coil-kt.coil3_coil-network-okhttp",
         "Twelve_com.google.android.material_material",
         "Twelve_com.github.bogerchan_Nier-Visualizer",
         "Twelve_com.squareup.okhttp3_okhttp",
         "kotlin-stdlib",
-        "kotlinx_serialization_json",
         "androidx.lifecycle_lifecycle-service",
         "kotlinx_coroutines_guava",
+        "kotlinx_serialization_json",
     ],
 
     optimize: {

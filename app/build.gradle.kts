@@ -92,6 +92,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.viewpager2)
     implementation(libs.coil)
+    implementation(libs.coil.core.android)
     implementation(libs.coil.network.okhttp)
     implementation(libs.kotlinx.coroutines.guava)
     implementation(libs.kotlinx.serialization.json)
