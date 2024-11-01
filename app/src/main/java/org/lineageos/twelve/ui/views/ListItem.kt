@@ -16,9 +16,11 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import androidx.annotation.StyleRes
 import androidx.core.view.isVisible
 import org.lineageos.twelve.R
 
@@ -27,8 +29,11 @@ import org.lineageos.twelve.R
  * @see <a href="https://m3.material.io/components/lists/overview">Material Design 3 docs</a>
  */
 class ListItem @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
-) : FrameLayout(context, attrs) {
+    context: Context,
+    attrs: AttributeSet? = null,
+    @AttrRes defStyleAttr: Int = 0,
+    @StyleRes defStyleRes: Int = 0,
+) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
     private val headlineTextView by lazy { findViewById<TextView>(R.id.headlineTextView) }
     private val leadingIconImageView by lazy { findViewById<ImageView>(R.id.leadingIconImageView) }
     private val leadingTextView by lazy { findViewById<TextView>(R.id.leadingTextView) }
