@@ -11,10 +11,13 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.Icon
 import android.net.Uri
 import android.util.AttributeSet
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import org.lineageos.twelve.R
@@ -29,9 +32,11 @@ class ListItem @JvmOverloads constructor(
     private val headlineTextView by lazy { findViewById<TextView>(R.id.headlineTextView) }
     private val leadingIconImageView by lazy { findViewById<ImageView>(R.id.leadingIconImageView) }
     private val leadingTextView by lazy { findViewById<TextView>(R.id.leadingTextView) }
+    private val leadingViewContainerFrameLayout by lazy { findViewById<FrameLayout>(R.id.leadingViewContainerFrameLayout) }
     private val supportingTextView by lazy { findViewById<TextView>(R.id.supportingTextView) }
     private val trailingIconImageView by lazy { findViewById<ImageView>(R.id.trailingIconImageView) }
     private val trailingSupportingTextView by lazy { findViewById<TextView>(R.id.trailingSupportingTextView) }
+    private val trailingViewContainerFrameLayout by lazy { findViewById<FrameLayout>(R.id.trailingViewContainerFrameLayout) }
 
     var leadingIconImage: Drawable?
         get() = leadingIconImageView.drawable
@@ -43,6 +48,12 @@ class ListItem @JvmOverloads constructor(
         get() = leadingTextView.text
         set(value) {
             leadingTextView.setTextAndUpdateVisibility(value)
+        }
+
+    var leadingView: View?
+        get() = leadingViewContainerFrameLayout.getChildAt(0)
+        set(value) {
+            leadingViewContainerFrameLayout.setChildAndUpdateVisibility(value)
         }
 
     var headlineText: CharSequence?
@@ -69,6 +80,12 @@ class ListItem @JvmOverloads constructor(
             trailingSupportingTextView.setTextAndUpdateVisibility(value)
         }
 
+    var trailingView: View?
+        get() = trailingViewContainerFrameLayout.getChildAt(0)
+        set(value) {
+            trailingViewContainerFrameLayout.setChildAndUpdateVisibility(value)
+        }
+
     init {
         inflate(context, R.layout.list_item, this)
 
@@ -76,10 +93,20 @@ class ListItem @JvmOverloads constructor(
             try {
                 leadingIconImage = getDrawable(R.styleable.ListItem_leadingIconImage)
                 leadingText = getString(R.styleable.ListItem_leadingText)
+                getResourceId(R.styleable.ListItem_leadingViewLayout, 0).takeUnless {
+                    it == 0
+                }?.let {
+                    setLeadingView(it)
+                }
                 headlineText = getString(R.styleable.ListItem_headlineText)
                 supportingText = getString(R.styleable.ListItem_supportingText)
                 trailingIconImage = getDrawable(R.styleable.ListItem_trailingIconImage)
                 trailingSupportingText = getString(R.styleable.ListItem_trailingSupportingText)
+                getResourceId(R.styleable.ListItem_trailingViewLayout, 0).takeUnless {
+                    it == 0
+                }?.let {
+                    setTrailingView(it)
+                }
             } finally {
                 recycle()
             }
@@ -101,6 +128,9 @@ class ListItem @JvmOverloads constructor(
     fun setLeadingText(@StringRes resId: Int, vararg formatArgs: Any) =
         leadingTextView.setTextAndUpdateVisibility(resId, *formatArgs)
 
+    fun setLeadingView(@LayoutRes resId: Int) =
+        leadingViewContainerFrameLayout.setChildAndUpdateVisibility(resId)
+
     fun setSupportingText(@StringRes resId: Int) =
         supportingTextView.setTextAndUpdateVisibility(resId)
 
@@ -119,6 +149,27 @@ class ListItem @JvmOverloads constructor(
 
     fun setTrailingSupportingText(@StringRes resId: Int, vararg formatArgs: Any) =
         trailingSupportingTextView.setTextAndUpdateVisibility(resId, *formatArgs)
+
+    fun setTrailingView(@LayoutRes resId: Int) =
+        trailingViewContainerFrameLayout.setChildAndUpdateVisibility(resId)
+
+    // FrameLayout utils
+
+    private fun FrameLayout.updateVisibility(isVisible: Boolean) {
+        this.isVisible = isVisible && childCount > 0
+    }
+
+    private fun FrameLayout.setChildAndUpdateVisibility(child: View?) {
+        removeAllViews()
+        child?.let {
+            addView(it)
+        }
+        updateVisibility(true)
+    }
+
+    private fun FrameLayout.setChildAndUpdateVisibility(@LayoutRes resId: Int) {
+        setChildAndUpdateVisibility(LayoutInflater.from(context).inflate(resId, this, false))
+    }
 
     // ImageView utils
 

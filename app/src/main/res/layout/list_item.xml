@@ -15,6 +15,13 @@
     android:paddingHorizontal="16dp"
     android:paddingVertical="12dp">
 
+    <FrameLayout
+        android:id="@+id/leadingViewContainerFrameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/leadingIconImageView"
         android:layout_width="wrap_content"
@@ -89,5 +96,11 @@
         app:tint="?attr/colorOnSurfaceVariant"
         tools:src="@android:drawable/star_on"
         tools:visibility="visible" />
+
+    <FrameLayout
+        android:id="@+id/trailingViewContainerFrameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
 
 </LinearLayout>
