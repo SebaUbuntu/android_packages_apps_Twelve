@@ -8,10 +8,12 @@
         <attr name="headlineText" format="string" />
         <attr name="leadingIconImage" format="reference" />
         <attr name="leadingText" format="string" />
+        <attr name="leadingViewIsVisible" format="boolean" />
         <attr name="leadingViewLayout" format="reference" />
         <attr name="supportingText" format="string" />
         <attr name="trailingIconImage" format="reference" />
         <attr name="trailingSupportingText" format="string" />
+        <attr name="trailingViewIsVisible" format="boolean" />
         <attr name="trailingViewLayout" format="reference" />
     </declare-styleable>
 </resources>

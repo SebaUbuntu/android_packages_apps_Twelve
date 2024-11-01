@@ -61,6 +61,12 @@ class ListItem @JvmOverloads constructor(
             leadingViewContainerFrameLayout.setChildAndUpdateVisibility(value)
         }
 
+    var leadingViewIsVisible: Boolean
+        get() = leadingViewContainerFrameLayout.isVisible
+        set(value) {
+            leadingViewContainerFrameLayout.updateVisibility(value)
+        }
+
     var headlineText: CharSequence?
         get() = headlineTextView.text
         set(value) {
@@ -91,6 +97,12 @@ class ListItem @JvmOverloads constructor(
             trailingViewContainerFrameLayout.setChildAndUpdateVisibility(value)
         }
 
+    var trailingViewIsVisible: Boolean
+        get() = trailingViewContainerFrameLayout.isVisible
+        set(value) {
+            leadingViewContainerFrameLayout.updateVisibility(value)
+        }
+
     init {
         inflate(context, R.layout.list_item, this)
 
@@ -103,6 +115,7 @@ class ListItem @JvmOverloads constructor(
                 }?.let {
                     setLeadingView(it)
                 }
+                leadingViewIsVisible = getBoolean(R.styleable.ListItem_leadingViewIsVisible, true)
                 headlineText = getString(R.styleable.ListItem_headlineText)
                 supportingText = getString(R.styleable.ListItem_supportingText)
                 trailingIconImage = getDrawable(R.styleable.ListItem_trailingIconImage)
@@ -112,6 +125,7 @@ class ListItem @JvmOverloads constructor(
                 }?.let {
                     setTrailingView(it)
                 }
+                trailingViewIsVisible = getBoolean(R.styleable.ListItem_trailingViewIsVisible, true)
             } finally {
                 recycle()
             }
